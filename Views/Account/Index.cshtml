@@ -1,0 +1,62 @@
+﻿@using TodoList.Models.Accounts;
+@model AccountViewModel
+
+@{
+    Layout = null;
+    var isVisibleRegisterTab = Model?.RegisterViewModel != null;
+}
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реєстрація та Авторизація</title>
+
+    
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet"/>
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true"/>
+    <link href="~/TodoList.styles.css" rel="stylesheet" asp-append-version="true"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+  <h2>Реєстрація та Авторизація</h2>
+  <ul class="nav nav-pills" id="ex1" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link @(!isVisibleRegisterTab ? "active" : "")"
+              id="tab-login" data-bs-toggle="pill" data-bs-target="#pills-login" role="tab"
+              aria-controls="pills-login" aria-selected="true">
+        Вхід
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link @(isVisibleRegisterTab ? "active" : "")"
+              id="tab-register" data-bs-toggle="pill" data-bs-target="#pills-register" role="tab"
+              aria-controls="pills-register" aria-selected="false">
+        Реєстрація
+      </button>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane fade @(!isVisibleRegisterTab ? "show active" : "")" id="pills-login" role="tabpanel">
+                @{
+                    ViewData.TemplateInfo.HtmlFieldPrefix = "l";
+                    await Html.RenderPartialAsync("_Login", Model?.LoginViewModel);
+                }
+    </div>
+    <div class="tab-pane fade @(isVisibleRegisterTab ? "show active" : "")" id="pills-register" role="tabpanel">
+                @{
+                    ViewData.TemplateInfo.HtmlFieldPrefix = "r";
+                    await Html.RenderPartialAsync("_Register", Model?.RegisterViewModel);
+                }
+    </div>
+  </div>
+</div>
+
+     <script src="~/js/site.js"></script>
+</body>
+</html>
+
